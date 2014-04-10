@@ -6,8 +6,9 @@
 
 .stack {
   list-style: none;
-  display: flex;
   width: 100%;
+  display: flex;
+  flex-flow: row wrap;
   justify-content: center;
 }
 
@@ -17,7 +18,7 @@
   transition: opacity 0.5s ease-in-out;
 }
 
-.stack .option.active {
+.stack .option.selected {
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 }

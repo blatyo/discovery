@@ -27,15 +27,31 @@ App.StacksRoute = Ember.Route.extend({
     var selections = [];
 
     params.apiNames.split('/').forEach(function(apiName){
-      var option = stack.get('options').findBy('apiName', apiName);
-      if(option && option.get('stack')){
-        stack = option.get('stack');
-        selections.addObject(stack);
+      if(stack){
+        var option = stack.get('options').findBy('apiName', apiName);
+        if(option){
+          selections.addObject(option);
+          stack = option.get('stack');
+        }
       }
     });
 
     return selections;
   }
+});
+
+App.StacksController = Ember.ArrayController.extend({
+  needs: ['application'],
+
+  rootStack: Ember.computed.alias('controllers.application.stack')
+});
+
+App.OptionController = Ember.ObjectController.extend({
+  needs: ['stacks'],
+
+  selected: function(){
+    return this.get('controllers.stacks.model').contains(this.get('model'));
+  }.property('controllers.stacks.model', 'model')
 });
 
 App.StackFlow = DS.Model.extend({
