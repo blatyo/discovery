@@ -18,6 +18,10 @@ App.ApplicationAdapter = DS.FixtureAdapter;
 App.ApplicationRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('stackFlow', DiscoverySettings.stackFlow);
+  },
+  setupController: function(controller, model) {
+    controller.set('model', model);
+    this.controllerFor('stacks').set('model', []);
   }
 });
 
@@ -40,11 +44,7 @@ App.StacksRoute = Ember.Route.extend({
   }
 });
 
-App.StacksController = Ember.ArrayController.extend({
-  needs: ['application'],
-
-  rootStack: Ember.computed.alias('controllers.application.stack')
-});
+App.StacksController = Ember.ArrayController.extend({});
 
 App.OptionController = Ember.ObjectController.extend({
   needs: ['stacks'],

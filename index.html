@@ -10,12 +10,12 @@
   <script type="text/x-handlebars">
     <div class='container'>
       <h1 class='hook'>Trade your device</h1>
+      {{render 'stack' stack}}
       {{outlet}}
     </div>
   </script>
 
   <script type="text/x-handlebars" data-template-name='stacks'>
-    {{render 'stack' rootStack}}
     {{#each}}
       {{render 'stack' stack}}
     {{/each}}
@@ -30,14 +30,14 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name='option'>
-    {{#link-to 'stacks' path tag='li' classNameBindings=":option apiName selected"}}
+    {{#link-to 'stacks' path tag='li' classNameBindings=':option apiName selected'}}
       <img {{bind-attr src=imageUrl}} class='option-image'>
-      <h2 class='option-name'>{{name}}<h2>
+      <h3 class='option-name'>{{name}}<h3>
     {{/link-to}}
   </script>
 
   <script type="text/x-handlebars" data-template-name="index">
-    {{render 'stack' stack}}
+
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
