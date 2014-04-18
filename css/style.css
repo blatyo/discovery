@@ -107,7 +107,7 @@
   content: ' ';
   position: relative;
   left: 50%;
-  top: -21px;
+  bottom: -21px;
   height: 0;
   width: 0;
   display: block;
