@@ -40,6 +40,11 @@
   visibility: visible;
   transition: opacity 0.5s ease-in-out;
   text-align: center;
+  height: 210px;
+}
+
+.stack .option-image {
+  max-height: 160px
 }
 
 .stack:last-of-type .option {
@@ -57,6 +62,19 @@
   transition: opacity 0.5s ease-in-out;
 }
 
+.stack:nth-last-of-type(n+3) {
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 88%,rgba(0,0,0,0.08) 100%);
+}
+
+.stack:nth-last-of-type(n+3) .option {
+  height: 46px;
+  min-width: 160px;
+}
+
+.stack:nth-last-of-type(n+3) .option-image {
+  display: none;
+}
+
 .stack .option-name {
   margin-top: 7px;
 }
@@ -70,7 +88,7 @@
   content: ' ';
   position: relative;
   left: 75px;
-  top: 212px;
+  top: 210px;
   height: 0;
   width: 0;
   display: block;
@@ -79,6 +97,10 @@
   border-right: 11px solid rgba(0,0,0,0);
   margin-bottom: -2px;
   margin-top: -9px;
+}
+
+.stack:nth-last-of-type(n+3) .selected:before {
+  top: 46px;
 }
 
 .stack .selected:after {

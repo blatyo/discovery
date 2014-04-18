@@ -22,17 +22,31 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name='stack'>
-    <ul {{bind-attr class=":stack apiName"}}>
-      {{#each options}}
-        {{render 'option' this}}
-      {{/each}}
-    </ul>
+    <!-- <h2>What {{name}} do I have?</h2> -->
+    {{#if isProductStack}}
+      <div {{bind-attr class=":stack apiName"}}>
+        {{#with product}}
+          <img {{bind-attr src=imageUrl}} class='option-image'>
+          <h4 class='option-name'>{{name}}<h4>
+          ${{price}}
+          {{expirationDate}}
+        {{/with}}
+      </div>
+    {{else}}
+      <ul {{bind-attr class=":stack apiName"}}>
+        {{#each options}}
+          {{render 'option' this}}
+        {{/each}}
+      </ul>
+    {{/if}}
   </script>
 
   <script type="text/x-handlebars" data-template-name='option'>
     {{#link-to 'stacks' path tag='li' classNameBindings=':option apiName selected'}}
-      <img {{bind-attr src=imageUrl}} class='option-image'>
-      <h3 class='option-name'>{{name}}<h3>
+      <figure>
+        <img {{bind-attr src=imageUrl}} class='option-image'>
+        <figcaption class='option-name'>{{name}}</figcaption>
+      </figure>
     {{/link-to}}
   </script>
 
