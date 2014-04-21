@@ -118,7 +118,8 @@ App.Product.FIXTURES = [];
       stacks: [
         ['Model', ['iPhone 5S', 'iPhone 5C', 'iPhone 5', 'iPhone 4S', 'iPhone 4']],
         ['Carrier', ['AT&T', 'Sprint', 'T-Mobile', 'Verizon', 'Other Carrier', 'Unlocked']],
-        ['Capacity', ['16GB', '32GB', '64GB']]
+        ['Capacity', ['16GB', '32GB', '64GB']],
+        ['Condition', ['Broken', 'Good', 'Perfect']]
       ]
     },
     ipad: {
@@ -128,7 +129,8 @@ App.Product.FIXTURES = [];
         ['Model', ['iPad Mini', 'iPad Air', 'iPad']],
         ['Generation', ['3rd Gen', '2nd Gen', '1st Gen']],
         ['Carrier', ['AT&T', 'Sprint', 'T-Mobile', 'Verizon', 'Wifi']],
-        ['Capacity', ['16GB', '32GB', '64GB']]
+        ['Capacity', ['16GB', '32GB', '64GB']],
+        ['Condition', ['Broken', 'Good', 'Perfect']]
       ]
     },
     'cell-phone': {
@@ -137,6 +139,7 @@ App.Product.FIXTURES = [];
       stacks: [
         ['Manufacturer', ['BlackBerry', 'HTC', 'LG', 'Motorola', 'Nokia', 'Samsung']],
         ['Carrier', ['AT&T', 'Sprint', 'T-Mobile', 'Verizon', 'Unlocked']],
+        ['Condition', ['Broken', 'Good', 'Perfect']]
       ]
     }
   };

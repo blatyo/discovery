@@ -78,7 +78,6 @@
 
 .stack:nth-last-of-type(n+3) {
   background: linear-gradient(to bottom, rgba(255,255,255,0) 88%,rgba(0,0,0,0.08) 100%);
-  transition: height 0.5s ease-in-out;
 }
 
 .stack:nth-last-of-type(n+3) .stack-help {
@@ -88,10 +87,12 @@
 .stack:nth-last-of-type(n+3) .option {
   height: 46px;
   min-width: 160px;
+  transition: height 0.5s ease-in-out;
 }
 
 .stack:nth-last-of-type(n+3) .option-figure {
   height: 26px;
+  transition: height 0.5s ease-in-out;
 }
 
 .stack:nth-last-of-type(n+3) .option-image {
