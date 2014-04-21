@@ -107,132 +107,126 @@ App.StackFlow.FIXTURES = [
   }
 ];
 
-App.Stack.FIXTURES = [
-  {
-    id: 1,
+App.Stack.FIXTURES = [];
+App.Option.FIXTURES = [];
+App.Product.FIXTURES = [];
+(function(stacks, options, products){
+  var data = {
+    iphone: {
+      name: 'iPhone',
+      imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/230/949/3/iphone_5s_16.jpg',
+      stacks: [
+        ['Model', ['iPhone 5S', 'iPhone 5C', 'iPhone 5', 'iPhone 4S', 'iPhone 4']],
+        ['Carrier', ['AT&T', 'Sprint', 'T-Mobile', 'Verizon', 'Other Carrier', 'Unlocked']],
+        ['Capacity', ['16GB', '32GB', '64GB']]
+      ]
+    },
+    ipad: {
+      name: 'iPad',
+      imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/175/808/3/ipad_4_128.jpg',
+      stacks: [
+        ['Model', ['iPad Mini', 'iPad Air', 'iPad']],
+        ['Generation', ['3rd Gen', '2nd Gen', '1st Gen']],
+        ['Carrier', ['AT&T', 'Sprint', 'T-Mobile', 'Verizon', 'Wifi']],
+        ['Capacity', ['16GB', '32GB', '64GB']]
+      ]
+    },
+    'cell-phone': {
+      name: 'Cell Phone',
+      imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/130/636/6/samsung-galaxy-s3.jpg',
+      stacks: [
+        ['Manufacturer', ['BlackBerry', 'HTC', 'LG', 'Motorola', 'Nokia', 'Samsung']],
+        ['Carrier', ['AT&T', 'Sprint', 'T-Mobile', 'Verizon', 'Unlocked']],
+      ]
+    }
+  };
+
+  var apierize = function(name){
+    return name.replace('iP', 'ip').dasherize();
+  };
+
+  var buildProduct = function(ancestors, imageUrl){
+    var product = {
+      id: products.length + 1,
+      name: ancestors.join(' '),
+      apiName: apierize(ancestors.join(' ')),
+      imageUrl: imageUrl,
+      price: Math.floor(Math.random() * 1000),
+      expirationDate: new Date()
+    };
+    products.push(product);
+
+    return product;
+  };
+
+  var buildOption = function(ancestors, imageUrl, remainingStacks, name){
+    var option = {
+      id: options.length + 1,
+      name: name,
+      apiName: apierize(name),
+      imageUrl: imageUrl
+    };
+    options.push(option);
+
+    ancestors = ancestors.slice(0);
+    ancestors.push(option.name);
+    var stack = buildStack(ancestors, imageUrl, remainingStacks);
+    option.stack = stack.id;
+    stack.parentOption = option.id;
+
+    return option;
+  };
+
+  var buildStack = function(ancestors, imageUrl, remainingStacks){
+    remainingStacks = remainingStacks.slice(0);
+    var stackData = remainingStacks.shift();
+    var stack = {
+      id: stacks.length + 1
+    };
+    stacks.push(stack);
+
+    if(stackData){
+      stack.name = stackData[0];
+      stack.apiName = apierize(stackData[0]);
+      stack.options = stackData[1].map(function(optionName){
+        var option = buildOption(ancestors, imageUrl, remainingStacks, optionName);
+        option.parentStack = stack.id;
+        return option.id;
+      });
+    } else {
+      var product = buildProduct(ancestors, imageUrl);
+      stack.product = product.id;
+      stack.name = 'Product';
+      stack.apiName = 'product';
+    }
+    return stack;
+  };
+
+  var topStack = {
+    id: stacks.length + 1,
     name: 'Root',
     apiName: 'root',
-    options: [1, 2]
-  },
-  {
-    id: 2,
-    name: 'Model',
-    apiName: 'model',
-    parentOption: 1,
-    options: [3, 4]
-  },
-  {
-    id: 4,
-    name: 'Carrier',
-    apiName: 'carrier',
-    parentOption: 3,
-    options: [7, 8]
-  },
-  {
-    id: 5,
-    name: 'Condition',
-    apiName: 'condition',
-    parentOption: 7,
-    options: [9]
-  },
-  {
-    id: 6,
-    name: 'Product',
-    apiName: 'product',
-    parentOption: 9,
-    product: 1
-  },
-  {
-    id: 3,
-    name: 'Model',
-    apiName: 'model',
-    parentOption: 2,
-    options: [5, 6]
-  }
-];
+    options: []
+  };
+  stacks.push(topStack);
+  var categoryData, categoryOption, categoryStack;
+  for(var category in data){
+    categoryData = data[category];
+    categoryOption = {
+      id: options.length + 1,
+      name: categoryData.name,
+      apiName: apierize(categoryData.name),
+      imageUrl: categoryData.imageUrl
+    };
+    options.push(categoryOption);
 
-App.Option.FIXTURES = [
-  {
-    id: 1,
-    name: 'iPhone',
-    apiName: 'iphone',
-    imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/230/949/3/iphone_5s_16.jpg',
-    parentStack: 1,
-    stack: 2
-  },
-  {
-    id: 3,
-    name: 'iPhone 5s',
-    apiName: 'iphone-5s',
-    imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/230/949/3/iphone_5s_16.jpg',
-    parentStack: 2,
-    stack: 4
-  },
-  {
-    id: 7,
-    name: 'AT&T',
-    apiName: 'att',
-    imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/230/949/3/iphone_5s_16.jpg',
-    parentStack: 4,
-    stack: 5
-  },
-  {
-    id: 9,
-    name: 'Perfect',
-    apiName: 'perfect',
-    imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/230/949/3/iphone_5s_16.jpg',
-    parentStack: 5,
-    stack: 6
-  },
-  {
-    id: 8,
-    name: 'Verizon',
-    apiName: 'verizon',
-    imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/230/949/3/iphone_5s_16.jpg',
-    parentStack: 4
-  },
-  {
-    id: 4,
-    name: 'iPhone 5c',
-    apiName: 'iphone-5c',
-    imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/230/949/3/iphone_5s_16.jpg',
-    parentStack: 2
-  },
-  {
-    id: 2,
-    name: 'iPad',
-    apiName: 'ipad',
-    imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/175/808/3/ipad_4_128.jpg',
-    parentStack: 1,
-    stack: 3
-  },
-  {
-    id: 5,
-    name: 'iPad Mini',
-    apiName: 'ipad-mini',
-    imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/175/808/3/ipad_4_128.jpg',
-    parentStack: 3
-  },
-  {
-    id: 6,
-    name: 'iPad Air',
-    apiName: 'ipad-air',
-    imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/175/808/3/ipad_4_128.jpg',
-    parentStack: 3
+    categoryStack = buildStack([], categoryData.imageUrl, categoryData.stacks);
+    topStack.options.push(categoryOption.id);
+    categoryOption.stack = categoryStack.id;
+    categoryStack.parentOption = categoryOption.id;
+    categoryOption.parentStack = topStack.id;
   }
-];
-
-App.Product.FIXTURES = [
-  {
-    id: 1,
-    stack: 6,
-    name: 'Perfect Apple iPhone 5s AT&T',
-    apiName: 'perfect-apple-iphone-5s-att',
-    imageUrl: 'https://cdn.gazelle.com/gz_attachments/product_image/230/949/3/iphone_5s_16.jpg',
-    price: 367,
-    expirationDate: new Date()
-  }
-];
+})(App.Stack.FIXTURES, App.Option.FIXTURES, App.Product.FIXTURES);
 
 Ember.Application.initializer({
   name: "force load fixtures",

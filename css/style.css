@@ -16,14 +16,20 @@
 }
 
 .stack {
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 97%,rgba(0,0,0,0.08) 100%);
+  border-top: 2px solid #ababab;
+  padding: 0;
+  margin: 0;
+}
+
+.stack .stack-options {
   list-style: none;
   width: 100%;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  background: linear-gradient(to bottom, rgba(255,255,255,0) 97%,rgba(0,0,0,0.08) 100%);
-  border-top: 2px solid #ababab;
-  margin: 0 auto;
+  margin: 0;
+  padding: 0;
   padding-top: 7px;
 }
 
@@ -43,11 +49,19 @@
   height: 210px;
 }
 
+.stack .option-figure {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  height: 190px;
+}
+
 .stack .option-image {
   max-height: 160px
 }
 
 .stack:last-of-type .option {
+  min-width: 160px;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 }
@@ -64,11 +78,20 @@
 
 .stack:nth-last-of-type(n+3) {
   background: linear-gradient(to bottom, rgba(255,255,255,0) 88%,rgba(0,0,0,0.08) 100%);
+  transition: height 0.5s ease-in-out;
+}
+
+.stack:nth-last-of-type(n+3) .stack-help {
+  display: none;
 }
 
 .stack:nth-last-of-type(n+3) .option {
   height: 46px;
   min-width: 160px;
+}
+
+.stack:nth-last-of-type(n+3) .option-figure {
+  height: 26px;
 }
 
 .stack:nth-last-of-type(n+3) .option-image {
@@ -101,6 +124,7 @@
 
 .stack:nth-last-of-type(n+3) .selected:before {
   top: 46px;
+  transition: top 0.5s ease-in-out;
 }
 
 .stack .selected:after {

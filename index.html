@@ -22,36 +22,44 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name='stack'>
-    <!-- <h2>What {{name}} do I have?</h2> -->
     {{#if isProductStack}}
-      <div {{bind-attr class=":stack apiName"}}>
-        {{#with product}}
-          <img {{bind-attr src=imageUrl}} class='option-image'>
-          <h4 class='option-name'>{{name}}<h4>
-          ${{price}}
-          {{expirationDate}}
-        {{/with}}
-      </div>
+      {{partial 'stack/product'}}
     {{else}}
-      <ul {{bind-attr class=":stack apiName"}}>
+      {{partial 'stack/options'}}
+    {{/if}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name='stack/_options'>
+    <nav {{bind-attr class=":stack apiName"}}>
+      <h4 class='stack-help'>What {{name}} do I have?</h4>
+      <ul class='stack-options'>
         {{#each options}}
           {{render 'option' this}}
         {{/each}}
       </ul>
-    {{/if}}
+    </nav>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name='stack/_product'>
+    <section {{bind-attr class=":stack apiName"}}>
+      {{render 'product' product}}
+    </section>
   </script>
 
   <script type="text/x-handlebars" data-template-name='option'>
     {{#link-to 'stacks' path tag='li' classNameBindings=':option apiName selected'}}
-      <figure>
+      <figure class='option-figure'>
         <img {{bind-attr src=imageUrl}} class='option-image'>
         <figcaption class='option-name'>{{name}}</figcaption>
       </figure>
     {{/link-to}}
   </script>
 
-  <script type="text/x-handlebars" data-template-name="index">
-
+  <script type="text/x-handlebars" data-template-name="product">
+    <img {{bind-attr src=imageUrl}} class='option-image'>
+    <h4 class='option-name'>{{name}}<h4>
+    ${{price}}
+    {{expirationDate}}
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
